@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner Absensi QR NESAT</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Library HTML5-QRCode untuk kamera yang lebih stabil & tidak error -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <!-- Library Chart.js untuk diagram rekap di Admin -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h2>Scanner Absensi QR NESAT</h2>
+            <p>SMKN 1 Gunung Sindur</p>
+        </header>
+
+        <!-- Tab Navigasi Utama -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('scanner')">📱 Scanner QR</button>
+            <button class="tab-btn" onclick="switchTab('login-pilihan')">🔒 Login (Guru / Admin)</button>
+        </div>
+
+        <!-- 1. TAB SCANNER QR -->
+        <div id="scanner-section" class="tab-content active">
+            <div class="scanner-box">
+                <div id="reader"></div>
+            </div>
+            <div id="scan-result" class="alert">Tekan tombol di bawah untuk mulai memindai QR Siswa.</div>
+        </div>
+
+        <!-- 2. TAB PILIHAN LOGIN (GURU / ADMIN) -->
+        <div id="login-pilihan-section" class="tab-content">
+            <div class="card-box text-center">
+                <h3>Pilih Portal Masuk</h3>
+                <p class="sub-text">Silakan pilih hak akses akun Anda.</p>
+                <div class="btn-group-login">
+                    <button class="btn-purple" onclick="showLogin('guru')">👨‍🏫 Login Guru (Monitoring)</button>
+                    <button class="btn-purple-outline" onclick="showLogin('admin')">⚙️ Login Admin (Rekap & Diagram)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORM LOGIN GURU -->
+        <div id="login-guru-section" class="tab-content">
+            <div class="card-box">
+                <h3>🔑 Login Khusus Guru</h3>
+                <p class="sub-text">Masukkan password guru untuk akses monitoring.</p>
+                <input type="password" id="guru-pass" placeholder="Password Guru...">
+                <button class="btn-purple" onclick="loginGuruAction()">Masuk Dashboard Guru</button>
+                <button class="btn-back" onclick="switchTab('login-pilihan')">Kembali</button>
+            </div>
+        </div>
+
+        <!-- FORM LOGIN ADMIN -->
+        <div id="login-admin-section" class="tab-content">
+            <div class="card-box">
+                <h3>🔑 Login Khusus Admin</h3>
+                <p class="sub-text">Masukkan password admin untuk akses rekap & diagram.</p>
+                <input type="password" id="admin-pass" placeholder="Password Admin...">
+                <button class="btn-purple" onclick="loginAdminAction()">Masuk Dashboard Admin</button>
+                <button class="btn-back" onclick="switchTab('login-pilihan')">Kembali</button>
+            </div>
+        </div>
+
+        <!-- 3. DASHBOARD GURU (MONITORING & UBAH STATUS) -->
+        <div id="dashboard-guru-section" class="tab-content">
+            <div class="dashboard-header">
+                <h3>👨‍🏫 Dashboard Guru - Monitoring Absensi</h3>
+                <button class="btn-logout" onclick="logoutSystem()">Keluar</button>
+            </div>
+            <div class="table-container">
+                <table id="tabel-guru">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>NIS</th>
+                            <th>Nama</th>
+                            <th>Kelas</th>
+                            <th>Jam Masuk</th>
+                            <th>Jam Pulang</th>
+                            <th>Status</th>
+                            <th>Ubah Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-guru"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. DASHBOARD ADMIN (REKAP & DIAGRAM) -->
+        <div id="dashboard-admin-section" class="tab-content">
+            <div class="dashboard-header">
+                <h3>⚙️ Dashboard Admin - Rekap & Grafik</h3>
+                <button class="btn-logout" onclick="logoutSystem()">Keluar</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="rekapChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
